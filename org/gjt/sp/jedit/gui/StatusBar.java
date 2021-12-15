@@ -400,6 +400,58 @@ public class StatusBar extends JPanel
 				buf.append(')');
 			}
 
+			buf.append('(');
+            char[] chars = buffer.getText(0,caretPosition).toCharArray();
+            int characters = chars.length;
+            int words = 0;
+            boolean word = true;
+            for (char aChar : chars)
+            {
+                switch (aChar)
+                {
+                    case '\r':
+                    case '\n':
+                    case ' ':
+                    case '\t':
+                        word = true;
+                        break;
+                    default:
+                        if (word)
+                        {
+                            words++;
+                            word = false;
+                        }
+                        break;
+                }
+            }
+            buf.append(words);
+            buf.append('/');
+            char[] chars2 = buffer.getText(0,buffer.getLength()).toCharArray();
+            characters = chars2.length;
+            words = 0;
+            word = true;
+            for (char aChar : chars2)
+            {
+                switch (aChar)
+                {
+                    case '\r':
+                    case '\n':
+                    case ' ':
+                    case '\t':
+                        word = true;
+                        break;
+                    default:
+                        if (word)
+                        {
+                            words++;
+                            word = false;
+                        }
+                        break;
+                }
+            }
+            buf.append(words);
+            buf.append(')');
+
 			caretStatus.setText(buf.toString());
 			buf.setLength(0);
 		}
